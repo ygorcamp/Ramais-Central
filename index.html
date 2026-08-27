@@ -267,6 +267,210 @@ mark{
   .card{padding:12px;}
   .card .ramal{font-size:14px;padding:8px 11px;min-width:92px;}
 }
+
+/* Tema azul mais escuro — aplicado sem alterar a estrutura ou os dados */
+:root{
+  --bg:#e8f0f8;
+  --panel:#f8fbff;
+  --panel2:#d7e4f2;
+  --accent:#174f86;
+  --accent2:#0d355f;
+  --gold:#2b6da8;
+  --text:#162536;
+  --muted:#52677d;
+  --border:#b8cadc;
+  --success:#176b4a;
+}
+
+body{
+  background:
+    radial-gradient(900px 420px at 90% -8%, rgba(23,79,134,.18), transparent 60%),
+    radial-gradient(700px 380px at 6% 0%, rgba(13,53,95,.14), transparent 55%),
+    var(--bg);
+}
+
+header::before{
+  background:linear-gradient(155deg,var(--accent),var(--accent2));
+  box-shadow:0 8px 20px -6px rgba(13,53,95,.45);
+}
+
+header h1{color:var(--accent2);}
+header .rule{background:var(--gold);}
+
+.search-panel{
+  background:var(--panel);
+  border-color:var(--border);
+}
+
+.search-box svg{color:var(--accent);}
+
+#search{
+  background:#cbdced;
+  border-color:#9fb6ce;
+  color:var(--text);
+}
+#search::placeholder{color:#5f7690;}
+#search:focus{
+  border-color:var(--accent);
+  background:#eef5fc;
+  box-shadow:0 0 0 3px rgba(23,79,134,.16);
+}
+
+.filters select{
+  background:#cbdced;
+  border-color:#9fb6ce;
+  color:var(--text);
+}
+.filters select:focus{
+  border-color:var(--accent);
+  outline:none;
+  box-shadow:0 0 0 3px rgba(23,79,134,.12);
+}
+
+#count-badge{
+  background:rgba(23,79,134,.13);
+  color:var(--accent2);
+}
+
+.clear-btn{
+  background:#cbdced;
+  border-color:#9fb6ce;
+  color:var(--accent2);
+}
+.clear-btn:hover{
+  background:#b8cde1;
+  border-color:var(--accent);
+  color:var(--accent2);
+}
+
+.group-title{color:var(--accent2);}
+.group-title::after{background:var(--border);}
+
+.card{
+  background:var(--panel);
+  border-color:var(--border);
+  border-left-color:var(--gold);
+}
+.card:hover{
+  border-color:var(--accent);
+  border-left-color:var(--accent);
+}
+
+.card .ramal{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#f4f9ff;
+}
+
+mark{
+  background:rgba(43,109,168,.22);
+  color:var(--accent2);
+}
+
+.empty svg{color:var(--accent);}
+
+
+/* Azul ainda mais escuro */
+:root{
+  --bg:#c7d7e8;
+  --panel:#edf4fb;
+  --panel2:#b2c7dc;
+  --accent:#0b3d6e;
+  --accent2:#06294d;
+  --gold:#145a91;
+  --text:#0d1d2d;
+  --muted:#40566d;
+  --border:#829fba;
+  --success:#0d5138;
+}
+
+body{
+  background:
+    radial-gradient(900px 420px at 90% -8%, rgba(6,41,77,.30), transparent 60%),
+    radial-gradient(700px 380px at 6% 0%, rgba(11,61,110,.25), transparent 55%),
+    var(--bg);
+}
+
+header::before{
+  background:linear-gradient(155deg,#0b3d6e,#041d38);
+  box-shadow:0 10px 24px -6px rgba(4,29,56,.60);
+}
+
+header h1{color:#06294d;}
+header .rule{background:#145a91;}
+
+.search-panel{
+  background:#edf4fb;
+  border-color:#829fba;
+  box-shadow:0 8px 24px rgba(6,41,77,.10);
+}
+
+.search-box svg{color:#0b3d6e;}
+
+#search{
+  background:#a9bfd5;
+  border-color:#6f91ad;
+  color:#0d1d2d;
+}
+#search::placeholder{color:#405b73;}
+#search:focus{
+  border-color:#0b3d6e;
+  background:#dfeaf5;
+  box-shadow:0 0 0 3px rgba(11,61,110,.22);
+}
+
+.filters select{
+  background:#a9bfd5;
+  border-color:#6f91ad;
+  color:#0d1d2d;
+}
+.filters select:focus{
+  border-color:#0b3d6e;
+  outline:none;
+  box-shadow:0 0 0 3px rgba(11,61,110,.18);
+}
+
+#count-badge{
+  background:rgba(11,61,110,.18);
+  color:#06294d;
+}
+
+.clear-btn{
+  background:#a9bfd5;
+  border-color:#6f91ad;
+  color:#06294d;
+}
+.clear-btn:hover{
+  background:#8faac2;
+  border-color:#0b3d6e;
+  color:#041d38;
+}
+
+.group-title{color:#06294d;}
+.group-title::after{background:#829fba;}
+
+.card{
+  background:#edf4fb;
+  border-color:#829fba;
+  border-left-color:#145a91;
+}
+.card:hover{
+  border-color:#0b3d6e;
+  border-left-color:#0b3d6e;
+  box-shadow:0 10px 25px rgba(6,41,77,.16);
+}
+
+.card .ramal{
+  background:linear-gradient(135deg,#0b3d6e,#06294d);
+  color:#f5f9fd;
+}
+
+mark{
+  background:rgba(20,90,145,.28);
+  color:#06294d;
+}
+
+.empty svg{color:#0b3d6e;}
+
 </style>
 
 <style id="new-design-only">
