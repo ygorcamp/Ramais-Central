@@ -46,17 +46,17 @@ button,input { font:inherit; }
 
 .header-main {
   max-width:1500px;
-  min-height:78px;
+  min-height:58px;
   margin:auto;
-  padding:0 28px;
+  padding:0 22px;
   display:flex;
   align-items:center;
-  gap:22px;
+  gap:16px;
 }
 
 .logo {
-  width:175px;
-  max-height:52px;
+  width:145px;
+  max-height:40px;
   object-fit:contain;
   object-position:left center;
 }
@@ -105,7 +105,7 @@ button,input { font:inherit; }
 .page {
   max-width:1500px;
   margin:auto;
-  padding:28px;
+  padding:16px;
 }
 
 .toolbar {
@@ -117,24 +117,24 @@ button,input { font:inherit; }
 }
 
 .toolbar-top {
-  padding:18px 20px;
+  padding:11px 16px;
   display:grid;
-  grid-template-columns:minmax(280px,1fr) minmax(520px,720px);
+  grid-template-columns:minmax(240px,1fr) minmax(460px,680px);
   align-items:center;
-  gap:18px;
+  gap:14px;
 }
 
 .title-area h1 {
   margin:0;
-  font:800 24px Manrope,Inter,sans-serif;
+  font:800 18px Manrope,Inter,sans-serif;
   color:var(--navy);
-  letter-spacing:-.035em;
+  letter-spacing:-.03em;
 }
 
 .title-area p {
-  margin:5px 0 0;
+  margin:2px 0 0;
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
 }
 
 .search-wrap {
@@ -154,14 +154,14 @@ button,input { font:inherit; }
 
 .search {
   width:100%;
-  height:45px;
-  padding:0 15px 0 43px;
+  height:36px;
+  padding:0 14px 0 40px;
   border:1px solid var(--line-dark);
-  border-radius:11px;
+  border-radius:10px;
   outline:none;
   background:#fafcfd;
   color:var(--text);
-  font-size:13px;
+  font-size:12.5px;
   transition:.18s ease;
 }
 
@@ -175,37 +175,56 @@ button,input { font:inherit; }
 
 .group-bar {
   border-top:1px solid var(--line);
-  padding:13px 18px;
+  padding:9px 14px;
   display:flex;
   flex-wrap:wrap;
-  gap:7px;
+  gap:5px;
+  max-height:112px;
+  overflow-y:auto;
   background:#fbfcfd;
 }
 
 .group-btn {
+  --sc:var(--blue);
   appearance:none;
+  display:flex;
+  align-items:center;
+  gap:5px;
   border:1px solid var(--line);
   background:#fff;
   color:#586a7d;
-  border-radius:7px;
-  padding:7px 10px;
-  font-size:10.5px;
+  border-radius:6px;
+  padding:4.5px 9px;
+  font-size:10px;
   font-weight:700;
   cursor:pointer;
   transition:.15s ease;
   white-space:nowrap;
 }
 
+.group-btn::before {
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--sc);
+  flex:none;
+}
+
 .group-btn:hover {
-  border-color:#9dbbd1;
-  color:var(--blue);
+  border-color:var(--sc);
+  color:var(--sc);
   background:#f7fbfe;
 }
 
 .group-btn.active {
-  background:var(--navy);
-  border-color:var(--navy);
+  background:var(--sc);
+  border-color:var(--sc);
   color:#fff;
+}
+
+.group-btn.active::before {
+  background:#fff;
 }
 
 .info-row {
@@ -213,11 +232,11 @@ button,input { font:inherit; }
   justify-content:space-between;
   align-items:center;
   gap:15px;
-  padding:20px 2px 11px;
+  padding:12px 2px 7px;
 }
 
 .info-title {
-  font:700 14px Manrope,Inter,sans-serif;
+  font:700 12.5px Manrope,Inter,sans-serif;
   color:var(--navy);
 }
 
@@ -238,7 +257,7 @@ button,input { font:inherit; }
   display:grid;
   grid-template-columns:minmax(0,1fr) 145px;
   gap:20px;
-  padding:10px 20px;
+  padding:6px 16px;
   background:#f6f8fa;
   border-bottom:1px solid var(--line);
   color:#778696;
@@ -257,50 +276,52 @@ button,input { font:inherit; }
 .sector:last-child { border-bottom:0; }
 
 .sector-title {
-  min-height:40px;
-  padding:0 20px;
+  --sc:var(--blue);
+  min-height:31px;
+  padding:0 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   background:linear-gradient(90deg,#eef5fa 0%,#f8fafc 60%,#fff 100%);
   border-bottom:1px solid var(--line);
+  border-left:3px solid var(--sc);
 }
 
 .sector-name {
   display:flex;
   align-items:center;
-  gap:9px;
+  gap:8px;
   color:var(--navy);
-  font-size:11px;
+  font-size:10.5px;
   font-weight:800;
-  letter-spacing:.035em;
+  letter-spacing:.03em;
   text-transform:uppercase;
 }
 
 .sector-name::before {
   content:"";
-  width:3px;
-  height:17px;
-  border-radius:3px;
-  background:var(--blue);
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--sc);
 }
 
 .sector-total {
-  color:#718194;
-  background:#e7eef4;
+  color:var(--sc);
+  background:color-mix(in srgb, var(--sc) 14%, #fff);
   border-radius:20px;
-  padding:4px 8px;
+  padding:3px 8px;
   font-size:9px;
   font-weight:800;
 }
 
 .contact {
-  min-height:51px;
+  min-height:38px;
   display:grid;
   grid-template-columns:minmax(0,1fr) 145px;
   gap:20px;
   align-items:center;
-  padding:8px 20px;
+  padding:5px 16px;
   border-bottom:1px solid #edf0f3;
   transition:background .12s ease;
 }
@@ -311,21 +332,21 @@ button,input { font:inherit; }
 
 .contact-name {
   min-width:0;
-  font-size:12.5px;
+  font-size:12px;
   font-weight:600;
   color:#243243;
 }
 
 .ramal {
   justify-self:end;
-  min-width:92px;
+  min-width:80px;
   border:1px solid #bddde4;
   background:#eff9fa;
   color:#087082;
-  border-radius:7px;
-  padding:7px 11px;
+  border-radius:6px;
+  padding:5px 9px;
   text-align:center;
-  font:800 12px ui-monospace,SFMono-Regular,Menlo,monospace;
+  font:800 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;
   cursor:pointer;
   transition:.14s ease;
 }
@@ -368,7 +389,7 @@ button,input { font:inherit; }
 }
 
 .footer {
-  padding:25px 0 5px;
+  padding:14px 0 4px;
   text-align:center;
   color:#8b98a5;
   font-size:10px;
@@ -398,26 +419,27 @@ button,input { font:inherit; }
 }
 
 @media(max-width:800px) {
-  .header-main { padding:0 17px; }
-  .page { padding:18px 16px 35px; }
+  .header-main { padding:0 14px; }
+  .page { padding:12px 12px 24px; }
   .brand-divider,.brand-text { display:none; }
-  .logo { width:140px; }
+  .logo { width:120px; }
   .header-meta { font-size:10px; }
   .toolbar-top { grid-template-columns:1fr; }
   .search-wrap { width:100%; }
 }
 
 @media(max-width:560px) {
-  .header-main { min-height:65px; }
-  .logo { width:125px; }
+  .header-main { min-height:50px; }
+  .logo { width:105px; }
   .header-meta { display:none; }
-  .title-area h1 { font-size:21px; }
-  .info-row { padding-top:17px; }
+  .title-area h1 { font-size:17px; }
+  .info-row { padding-top:10px; }
   .table-head { display:none; }
-  .contact { grid-template-columns:minmax(0,1fr) auto; gap:10px; padding:10px 13px; }
-  .sector-title { padding:0 13px; }
-  .contact-name { font-size:12px; }
-  .ramal { min-width:82px; padding:7px 8px; font-size:11px; }
+  .contact { grid-template-columns:minmax(0,1fr) auto; gap:10px; padding:7px 12px; min-height:34px; }
+  .sector-title { padding:0 12px; min-height:28px; }
+  .contact-name { font-size:11.5px; }
+  .ramal { min-width:74px; padding:5px 7px; font-size:10.5px; }
+  .group-bar { max-height:90px; }
 }
 </style>
 </head>
@@ -491,6 +513,18 @@ const normalize = value =>
 const sectors = [...new Set(DATA.map(item => item.setor))]
   .sort((a,b) => a.localeCompare(b, "pt-BR"));
 
+const SECTOR_PALETTE = [
+  "#1769aa","#c0392b","#0f9d58","#8e44ad","#d68910",
+  "#16a085","#c2185b","#2e7d32","#5b6fd6","#a6710b",
+  "#0aa1b5","#a83279","#3f6b1f","#7d3c98","#b8560f",
+  "#1f7a8c","#933b3b","#517664","#6a4c93","#946b1e"
+];
+
+const sectorColor = sector => {
+  const index = sectors.indexOf(sector);
+  return SECTOR_PALETTE[index % SECTOR_PALETTE.length];
+};
+
 function escapeHTML(value) {
   return String(value).replace(/[&<>"']/g, char => ({
     "&":"&amp;",
@@ -531,6 +565,7 @@ function renderGroups() {
   sectors.forEach(sector => {
     const button = document.createElement("button");
     button.className = "group-btn " + (selectedSector === sector ? "active" : "");
+    button.style.setProperty("--sc", sectorColor(sector));
     button.textContent = `${sector} · ${DATA.filter(item => item.setor === sector).length}`;
     button.onclick = () => {
       selectedSector = sector;
@@ -567,7 +602,7 @@ function render() {
 
   directoryEl.innerHTML = Object.entries(grouped).map(([sector, contacts]) => `
     <section class="sector">
-      <div class="sector-title">
+      <div class="sector-title" style="--sc:${sectorColor(sector)}">
         <div class="sector-name">${escapeHTML(sector)}</div>
         <div class="sector-total">${contacts.length}</div>
       </div>
