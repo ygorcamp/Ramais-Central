@@ -21,7 +21,7 @@ header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;pa
 h1{margin:12px 0 6px;font-size:clamp(26px,4vw,40px);letter-spacing:-.03em}
 .subtitle{margin:0;color:#d9e5f3}
 main{max-width:1200px;margin:-18px auto 40px;padding:0 18px}
-.controls{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;display:grid;grid-template-columns:1fr 220px auto;gap:10px}
+.controls{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;display:grid;grid-template-columns:1fr 220px auto auto;gap:10px}
 input,select,button{height:46px;border-radius:10px;border:1px solid var(--line);font:inherit}
 input,select{padding:0 14px;outline:none;background:#fff}
 input:focus,select:focus{border-color:#6fa8d8;box-shadow:0 0 0 3px rgba(23,105,170,.1)}
@@ -31,15 +31,23 @@ button:hover{background:#07172b}
 .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 15px;color:var(--muted);font-size:13px}
 .stat strong{color:var(--text);font-size:17px;margin-right:5px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 5px 20px rgba(16,42,67,.045);transition:.18s}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:0 5px 20px rgba(16,42,67,.045);transition:.18s}
 .card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.sector{font-size:11px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
-.name{font-size:16px;font-weight:750;line-height:1.35;margin-bottom:13px}
+.card.is-fav{border-color:#f2c14e;box-shadow:0 5px 20px rgba(242,193,78,.18)}
+.sector{font-size:11px;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px;padding-right:26px}
+.name{font-size:16px;font-weight:750;line-height:1.35;margin-bottom:13px;padding-right:26px}
 .phone{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px solid var(--line)}
 .number{font-size:20px;font-weight:800;color:var(--navy);letter-spacing:.02em}
+.fav-btn{position:absolute;top:14px;right:12px;width:28px;height:28px;border:0;background:transparent;padding:0;cursor:pointer;font-size:20px;line-height:1;color:#cbd6e2;display:flex;align-items:center;justify-content:center;transition:.15s;border-radius:8px}
+.fav-btn:hover{background:#f4f7fb;color:#f2c14e}
+.fav-btn.active{color:#f2ad19}
+.fav-toggle{display:flex;align-items:center;gap:8px;height:46px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--text);font-weight:700;cursor:pointer;white-space:nowrap}
+.fav-toggle .star{color:#cbd6e2;font-size:16px}
+.fav-toggle.active{background:#fff7e6;border-color:#f2c14e;color:#8a6d1f}
+.fav-toggle.active .star{color:#f2ad19}
 .empty{display:none;text-align:center;background:#fff;border:1px dashed #cbd6e2;border-radius:14px;padding:40px;color:var(--muted)}
 footer{text-align:center;color:#8794a5;font-size:12px;padding:0 20px 25px}
-@media(max-width:760px){.controls{grid-template-columns:1fr} .grid{grid-template-columns:1fr}}
+@media(max-width:760px){.controls{grid-template-columns:1fr 1fr} .controls #search{grid-column:1 / -1} .grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -54,6 +62,7 @@ footer{text-align:center;color:#8794a5;font-size:12px;padding:0 20px 25px}
   <section class="controls" aria-label="Filtros">
     <input id="search" type="search" placeholder="Pesquisar por nome, contato ou ramal..." autocomplete="off">
     <select id="sector"><option value="">Todos os setores</option></select>
+    <button id="favToggle" class="fav-toggle" type="button" aria-pressed="false"><span class="star">★</span> Favoritos</button>
     <button id="clear" type="button">Limpar filtros</button>
   </section>
   <div class="stats">
@@ -74,6 +83,7 @@ const grid = document.getElementById('grid');
 const search = document.getElementById('search');
 const sector = document.getElementById('sector');
 const clearBtn = document.getElementById('clear');
+const favToggle = document.getElementById('favToggle');
 const shown = document.getElementById('shown');
 const empty = document.getElementById('empty');
 
@@ -83,6 +93,24 @@ SECTORS.forEach(s => {
   sector.appendChild(opt);
 });
 
+const FAV_KEY = 'agendaTelefonicaFavoritos';
+let showOnlyFav = false;
+
+function loadFavs() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+  } catch (e) {
+    return new Set();
+  }
+}
+function saveFavs() {
+  localStorage.setItem(FAV_KEY, JSON.stringify([...favs]));
+}
+const favs = loadFavs();
+
+function favId(r) {
+  return [r["Setor"], r["Nome / Contato"], r["Ramal / Telefone"]].join('|');
+}
 function norm(v) {
   return String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 }
@@ -92,21 +120,46 @@ function esc(v) {
 function render() {
   const q = norm(search.value.trim());
   const s = sector.value;
-  const filtered = DATA.filter(r => {
+  let filtered = DATA.filter(r => {
     const hay = norm([r["Setor"],r["Nome / Contato"],r["Ramal / Telefone"]].join(' '));
     return (!q || hay.includes(q)) && (!s || r["Setor"] === s);
   });
+  if (showOnlyFav) {
+    filtered = filtered.filter(r => favs.has(favId(r)));
+  }
   shown.textContent = filtered.length;
   empty.style.display = filtered.length ? 'none' : 'block';
-  grid.innerHTML = filtered.map((r,i) => `
-    <article class="card">
+  empty.textContent = showOnlyFav && filtered.length === 0
+    ? 'Nenhum ramal favoritado ainda. Clique na estrela de um contato para favoritar.'
+    : 'Nenhum contato encontrado. Tente outro nome, setor ou ramal.';
+  grid.innerHTML = filtered.map((r,i) => {
+    const id = favId(r);
+    const isFav = favs.has(id);
+    return `
+    <article class="card${isFav ? ' is-fav' : ''}">
+      <button class="fav-btn${isFav ? ' active' : ''}" type="button" data-id="${esc(id)}" aria-pressed="${isFav}" title="${isFav ? 'Remover dos favoritos' : 'Favoritar ramal'}">${isFav ? '★' : '☆'}</button>
       <div class="sector">${esc(r["Setor"])}</div>
       <div class="name">${esc(r["Nome / Contato"])}</div>
       <div class="phone">
         <span class="number">${esc(r["Ramal / Telefone"])}</span>
       </div>
-    </article>`).join('');
+    </article>`;
+  }).join('');
 }
+grid.addEventListener('click', (e) => {
+  const btn = e.target.closest('.fav-btn');
+  if (!btn) return;
+  const id = btn.dataset.id;
+  if (favs.has(id)) favs.delete(id); else favs.add(id);
+  saveFavs();
+  render();
+});
+favToggle.addEventListener('click', () => {
+  showOnlyFav = !showOnlyFav;
+  favToggle.classList.toggle('active', showOnlyFav);
+  favToggle.setAttribute('aria-pressed', String(showOnlyFav));
+  render();
+});
 search.addEventListener('input', render);
 sector.addEventListener('change', render);
 clearBtn.addEventListener('click', () => { search.value=''; sector.value=''; render(); search.focus(); });
